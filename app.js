@@ -1,6 +1,13 @@
 require('dotenv').config();
+const https = require('https');
+const fs = require('fs');
 const express = require("express");
 const { postgraphile } = require("postgraphile");
+
+const options = {
+  key: fs.readFileSync(process.env.SSL_KEY_PATH),
+  cert: fs.readFileSync(process.env.SSL_CHAIN_PATH)
+}
 
 const app = express()
 
@@ -38,5 +45,5 @@ app.use(function (err, req, res, next) {
   res.send('Error! ', err.message, ' ', (req.app.get('env') === 'development' ? err : {}));
 });
 
-app.listen(process.env.PORT);
+const server = https.createServer(options, app).listen(process.env.PORT);
 
