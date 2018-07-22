@@ -32,7 +32,9 @@ app.use(postgraphile(
     watchPg: true,
     jwtPgTypeIdentifier: `${process.env.POSTGRAPHILE_SCHEMA}.jwt`,
     jwtSecret: process.env.JWT_SECRET,
-    pgDefaultRole: process.env.POSTGRAPHILE_DEFAULT_ROLE
+    pgDefaultRole: process.env.POSTGRAPHILE_DEFAULT_ROLE,
+    dynamicJson: true,
+    ignoreRBAC: false
   }))
 
 app.use(function (req, res, next) {
