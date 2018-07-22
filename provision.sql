@@ -184,6 +184,7 @@ $$ language plpgsql strict security definer;
 
 GRANT USAGE ON SCHEMA auth_public TO auth_anonymous, auth_authenticated; 
 GRANT SELECT ON TABLE auth_public.user TO auth_anonymous, auth_authenticated; 
+GRANT SELECT ON TABLE auth_public.venue TO auth_anonymous, auth_authenticated; 
 GRANT UPDATE, DELETE ON TABLE auth_public.user TO auth_authenticated; 
 GRANT EXECUTE ON FUNCTION auth_public.authenticate(text, text) TO auth_anonymous, auth_authenticated; 
 GRANT EXECUTE ON FUNCTION auth_public.register_venue(text, text, text, text, text, text, text, text, text, text, text, text, email, text, text, text, text, text, text, text, text, text) TO auth_anonymous, auth_authenticated; 
