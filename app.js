@@ -4,11 +4,6 @@ const fs = require('fs');
 const express = require("express");
 const { postgraphile } = require("postgraphile");
 
-const options = {
-  key: fs.readFileSync(process.env.SSL_KEY_PATH),
-  cert: fs.readFileSync(process.env.SSL_CHAIN_PATH)
-}
-
 const app = express()
 
 const postgresConfig = {
@@ -19,7 +14,7 @@ const postgresConfig = {
   database: process.env.POSTGRES_DATABASE
 }
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
@@ -27,7 +22,8 @@ app.use(function(req, res, next) {
 
 app.use(postgraphile(
   postgresConfig,
-  process.env.POSTGRAPHILE_SCHEMA, {
+  process.env.POSTGRAPHILE_SCHEMA,
+  {
     graphiql: true,
     watchPg: true,
     jwtPgTypeIdentifier: `${process.env.POSTGRAPHILE_SCHEMA}.jwt`,
@@ -47,5 +43,5 @@ app.use(function (err, req, res, next) {
   res.send('Error! ', err.message, ' ', (req.app.get('env') === 'development' ? err : {}));
 });
 
-const server = https.createServer(options, app).listen(process.env.PORT);
-
+// const server = https.createServer({}, app).listen(process.env.PORT);
+app.listen(process.env.PORT);
